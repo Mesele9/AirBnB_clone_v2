@@ -107,7 +107,7 @@ class HBNBCommand(cmd.Cmd):
 
     def help_EOF(self):
         """ Prints the help documentation for EOF """
-        print("Exits the program without formatting\n")
+        print("Exitsi the program without formatting\n")
 
     def emptyline(self):
         """ Overrides the emptyline method of CMD """
@@ -115,7 +115,6 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, arg):
         """ Create an object of any class"""
-        params = {}
         args = arg.split()
 
         if not args:
@@ -123,34 +122,32 @@ class HBNBCommand(cmd.Cmd):
             return
 
         class_name = args[0]
-        if not class_name:
-            print("** class name missing **")
-            return
-
-        try:
-            class_ = eval(class_name)
-        except NameError:
+        if class_name not in self.classes:
             print("** class doesn't exist **")
             return
-        except Exception as e:
-            print("**{}".format(e))
-            return
 
-        for arg in args[1:]:
+        class_attrs = self.classes[class_name].__dict__
+        param_dict = {}
+        for i in range(1, len(args)):
+            param = args[i]
             try:
-                key, value = arg.split("=")
-                value = value.strip('"').replace('\\"', '"').replace('_', ' ')
-                if "." in value:
+                key, value = param.split("=")
+                if value.startswith('"') and value.endswith('"'):
+                    value = value[1:-1].replace('_', ' ').replace('\\"', '"')
+                elif '.' in value:
                     value = float(value)
                 else:
                     value = int(value)
-                params[key] = value
-            except ValueError:
+                if key in class_attrs and type(value) == class_attrs[key]:
+                    param_dict[key] = value
+            except:
                 pass
 
-        instance = class_(**params)
-        instance.save()
-        print(instance.id)
+        
+        new_obj = self.classes[class_name](**param_dict)
+        '''self.storage.new(new_obj)'''
+        new_obj.save()
+        print(new_obj.id)
 
     def help_create(self):
         """ Help information for the create method """
