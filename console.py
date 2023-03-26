@@ -3,7 +3,7 @@
 import cmd
 import sys
 from models.base_model import BaseModel
-from models.__init__ import storage
+from models import storage
 from models.user import User
 from models.place import Place
 from models.state import State
@@ -115,6 +115,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, arg):
         """ Create an object of any class"""
+        from models import storage
         args = arg.split()
 
         if not args:
@@ -148,6 +149,9 @@ class HBNBCommand(cmd.Cmd):
         '''self.storage.new(new_obj)'''
         new_obj.save()
         print(new_obj.id)
+
+        storage.create_all()
+        storage.reload()
 
     def help_create(self):
         """ Help information for the create method """
@@ -342,6 +346,7 @@ class HBNBCommand(cmd.Cmd):
         """ Help information for the update class """
         print("Updates an object with new information")
         print("Usage: update <className> <id> <attName> <attVal>\n")
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
