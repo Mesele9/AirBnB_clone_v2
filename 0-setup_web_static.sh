@@ -18,4 +18,4 @@ sudo chown -R ubuntu:ubuntu /data/
 
 sudo sed -i '/server {/a \ \ \ \ location \/hbnb_static {\n\ \ \ \ \ \ \ \ alias \/data\/web_static\/current;}' /etc/nginx/sites-enabled/default
 
-sudo service ngnix restart
+sudo service nginx restart
