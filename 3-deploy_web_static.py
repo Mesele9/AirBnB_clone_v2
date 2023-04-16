@@ -4,6 +4,7 @@
 """
 from fabric.api import *
 from datetime import datetime
+from time import strftime
 from os import path
 
 
@@ -13,8 +14,8 @@ env.key_filename = '~/.ssh/id_rsa'
 
 
 def do_pack():
-    """ a Fabric script that generates a .tgz archive from the contents
-    of the web_static folder of your AirBnB Clone rep"""
+    """ a function that generates a .tgz archive from the contents
+    of the web_static folder of your AirBnB Clone repo"""
     time_stamp = strftime("%Y%m%d%H%M%S")
     try:
         local("mkdir -p versions")
@@ -53,10 +54,10 @@ def do_deploy(archive_path):
         run('sudo ln -s /data/web_static/releases/{}/ \
             /data/web_static/current'.format(archive_basename))
 
-        except:
-            return False
+    except:
+        return False
 
-        return True
+    return True
 
 
 def deploy():
