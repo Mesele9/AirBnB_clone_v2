@@ -28,13 +28,17 @@ def do_deploy(archive_path):
 
         run('sudo rm /tmp/{}'.format(archive_name))
 
-        run('sudo mv /data/web_static/releases/{}/web_static/* /data/web_static/releases/{}/'.format(archive_basename, archive_basename))
+        run('sudo mv /data/web_static/releases/{}/web_static/* \
+            /data/web_static/releases/{}/'
+            .format(archive_basename, archive_basename))
 
-        run('sudo rm -rf /data/web_static/release/{}/web_static'.format(archive_basename))
+        run('sudo rm -rf /data/web_static/release/{}/web_static'
+            .format(archive_basename))
 
         run('sudo rm -rf /data/web_static/current')
 
-        run('sudo ln -s /data/web_static/releases/{}/ /data/web_static/current'.format(archive_basename))
+        run('sudo ln -s /data/web_static/releases/{}/ \
+            /data/web_static/current'.format(archive_basename))
 
     except:
         return False
