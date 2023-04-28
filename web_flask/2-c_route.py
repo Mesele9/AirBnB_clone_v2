@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """a script that starts a Flask web aplication:
     /: display "Hello HBNB" and /hbnb: display "HBNB"
+    /c/<text>: display C followed by the value of the text
 """
 from flask import Flask
 
@@ -15,6 +16,12 @@ def hello_hbnb():
 @app.route('/hbnb', strict_slashes=False)
 def hbnb():
     return 'HBNB'
+
+
+@app.route('/c/<text>')
+def c_text(text):
+    text = text.replace('_', ' ')
+    return 'C %s' % text
 
 
 if __name__ == '__main__':
