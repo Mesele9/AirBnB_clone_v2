@@ -4,6 +4,7 @@ from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.orm import relationship
 import os
+from models.city import City
 
 
 class State(BaseModel, Base):
@@ -17,4 +18,4 @@ class State(BaseModel, Base):
         def cities(self):
             """Return list of cities with state_id equal to current state_id"""
             from models import storage
-            return [city for city in storage.all("City").values() if city.state_id == self.id]
+            return [city for city in storage.all(City).values() if city.state_id == self.id]

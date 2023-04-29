@@ -9,7 +9,7 @@ from models.base_model import BaseModel, Base
 class DBStorage:
     """ Fatabase Storage """
     __engine = None
-    __Session = None
+    __session = None
     
     def __init__(self):
         """ Initialize an instance of DBStorage """
@@ -56,3 +56,7 @@ class DBStorage:
         Base.metadata.create_all(self.__engine)
         session_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         DBStorage.__session = scoped_session(session_factory)
+
+    def close(self):
+        """ close the session"""
+        self.__session.close()
